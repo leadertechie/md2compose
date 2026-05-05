@@ -1,6 +1,7 @@
 {
   "name": "@leadertechie/md2compose",
-  "version": "0.1.0-alpha.2",
+  "version": "0.0.0",
+
   "description": "Generic markdown composition engine - stitch, slot, and hydrate markdown content with parent/child inheritance",
   "type": "module",
   "main": "./dist/index.js",
@@ -17,7 +18,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@leadertechie/r2tohtml": "^0.1.0-alpha.14"
+    "@leadertechie/r2tohtml": "^0.1.0-alpha.16"
+
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
