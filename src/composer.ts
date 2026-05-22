@@ -1,8 +1,11 @@
 import type { PipelineContext, PipelineStep, ComposerConfig } from "./types";
+import { getDefaultLogger } from "./telemetry-init.js";
+import type { LoggerInterface } from "@leadertechie/telemetry";
 import { ComposerBuilder } from "./builder";
 import { StitchStep } from "./steps/stitch-step";
 
 export class Composer {
+  private log: LoggerInterface;
   private steps: PipelineStep[];
 
   /** Backward-compat: accepts old ComposerConfig */
@@ -11,12 +14,14 @@ export class Composer {
   constructor(steps: PipelineStep[], _internal?: any);
   constructor(configOrSteps: any, _internal?: any) {
     if (Array.isArray(configOrSteps)) {
+    this.log = (configOrSteps as any).logger ?? getDefaultLogger("md2compose");
       this.steps = configOrSteps as PipelineStep[];
     } else {
       const c = new ComposerBuilder()
         .withLoader(configOrSteps.loader)
         .withUiBase(configOrSteps.uiBaseUrl)
         .build();
+      this.log = getDefaultLogger("md2compose");
       this.steps = c.steps;
     }
   }
@@ -61,3 +66,4 @@ export class Composer {
       .build();
   }
 }
+

@@ -113,6 +113,19 @@ describe('Composer', () => {
       await expect(composer.compose('missing.md')).rejects.toThrow('Source content missing');
     });
 
+    it('should preserve {{UI_BASE}} when uiBaseUrl is explicitly empty', async () => {
+      const composer = new Composer({
+        loader: createMockLoader({
+          'test.md': '<img src="{{UI_BASE}}/logo.png">',
+        }),
+        uiBaseUrl: '',
+      });
+
+      const result = await composer.compose('test.md', '');
+      // Empty string means "don't replace" — placeholder stays intact
+      expect(result).toBe('<img src="{{UI_BASE}}/logo.png">');
+    });
+
     it('should pre-process <link mfe?> tags', async () => {
       const composer = new Composer({
         loader: createMockLoader({
