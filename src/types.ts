@@ -40,6 +40,8 @@ export interface ComposerOptions {
 
 /** Legacy config (keep for backward compat) */
 export interface ComposerConfig {
+  /** Optional telemetry logger */
+  logger?: import("@leadertechie/telemetry").LoggerInterface;
   loader: Loader;
   uiBaseUrl?: string;
 }

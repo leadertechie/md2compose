@@ -43,7 +43,9 @@ export class ComposerBuilder {
       throw new Error("Loader is required to build Composer");
     }
 
-    const baseUrl = this.uiBaseUrl || "http://localhost:8788";
+    // If uiBaseUrl is undefined (not set) fall back to localhost for backward compat.
+    // If explicitly set to "" (empty string), respect that — no {{UI_BASE}} replacement.
+    const baseUrl = this.uiBaseUrl !== undefined ? this.uiBaseUrl : "http://localhost:8788";
     const steps = [
       new LoadStep(this.loader),
       new ParseStep(),

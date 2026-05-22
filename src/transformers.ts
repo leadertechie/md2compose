@@ -13,8 +13,19 @@ export const mfeLinkTransformer: Transformer = {
   },
 };
 
-/** Creates a transformer that replaces `{{UI_BASE}}` with a given URL */
+/** Creates a transformer that replaces `{{UI_BASE}}` with a given URL.
+ * Returns a noop transformer when uiBase is an empty string, so callers
+ * can pass "" to opt out of {{UI_BASE}} replacement (letting later steps
+ * or a separate token-replacement pass handle it). */
 export function uiBaseTransformer(uiBase: string): Transformer {
+  if (uiBase === "") {
+    return {
+      name: "ui-base",
+      transform(content: string): string {
+        return content;
+      },
+    };
+  }
   return {
     name: "ui-base",
     transform(content: string): string {
