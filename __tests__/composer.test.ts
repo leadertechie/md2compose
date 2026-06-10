@@ -94,7 +94,7 @@ describe('Composer', () => {
       expect(result).toBe('<img src="https://cdn.example.com/logo.png">');
     });
 
-    it('should hydrate {{UI_BASE}} with default URL', async () => {
+    it('should not hydrate {{UI_BASE}} when no uiBaseUrl is set', async () => {
       const composer = new Composer({
         loader: createMockLoader({
           'test.md': '{{UI_BASE}}/style.css',
@@ -102,7 +102,7 @@ describe('Composer', () => {
       });
 
       const result = await composer.compose('test.md', '');
-      expect(result).toBe('http://localhost:8788/style.css');
+      expect(result).toBe('{{UI_BASE}}/style.css');
     });
 
     it('should throw when source content missing', async () => {
@@ -155,6 +155,7 @@ describe('Composer', () => {
           'test.md': 'Content',
           '__sys_/base.md': '<layout><!-- slot:content --></layout>',
         }),
+        defaultParent: '__sys_/base.md',
       });
 
       const result = await composer.compose('test.md');
