@@ -20,6 +20,7 @@ export class Composer {
       const c = new ComposerBuilder()
         .withLoader(configOrSteps.loader)
         .withUiBase(configOrSteps.uiBaseUrl)
+        .withDefaultParent(configOrSteps.defaultParent)
         .build();
       this.log = getDefaultLogger("md2compose");
       this.steps = c.steps;

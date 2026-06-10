@@ -84,7 +84,7 @@ new Composer(config: ComposerConfig)
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `loader` | `(path: string) => Promise<string \| null>` | required | Content loader function |
-| `uiBaseUrl` | `string` | `'http://localhost:8788'` | Base URL for `{{UI_BASE}}` placeholder hydration |
+| `uiBaseUrl` | `string` | `''` | Base URL for `{{UI_BASE}}` placeholder hydration |
 
 #### Methods
 

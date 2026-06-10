@@ -11,7 +11,7 @@ export class ComposerBuilder {
   private loader?: Loader;
   private transformers: Transformer[] = [];
   private uiBaseUrl?: string;
-  private defaultParent: string = "__sys_/base.md";
+  private defaultParent: string = "";
 
   withLoader(loader: Loader): this {
     this.loader = loader;
@@ -43,9 +43,8 @@ export class ComposerBuilder {
       throw new Error("Loader is required to build Composer");
     }
 
-    // If uiBaseUrl is undefined (not set) fall back to localhost for backward compat.
-    // If explicitly set to "" (empty string), respect that — no {{UI_BASE}} replacement.
-    const baseUrl = this.uiBaseUrl !== undefined ? this.uiBaseUrl : "http://localhost:8788";
+    // uiBaseUrl is set by consumer. Empty string = no {{UI_BASE}} replacement.
+    const baseUrl = this.uiBaseUrl || "";
     const steps = [
       new LoadStep(this.loader),
       new ParseStep(),
