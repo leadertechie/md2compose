@@ -177,3 +177,34 @@ describe('Composer', () => {
     });
   });
 });
+
+describe('Composer layout projection', () => {
+  it('projects a content map through a layout template into the parent', async () => {
+    const composer = new Composer({
+      loader: createMockLoader({
+        'register.md': '---\nlayout: layouts/register.md\ncontent:\n  headline: "Hello"\n  subhead: "World"\n---\n',
+        'layouts/register.md': '---\nparent: base.md\n---\n<div data-mfe-headline="{{content.headline}}" data-mfe-subhead="{{content.subhead}}"></div>',
+        'base.md': '<main><!-- slot:body --></main>',
+      }),
+    });
+
+    const result = await composer.compose('register.md', '');
+    expect(result).toContain('data-mfe-headline="Hello"');
+    expect(result).toContain('data-mfe-subhead="World"');
+    expect(result).toContain('<main>');
+  });
+
+  it('injects a content body into the layout slot when present', async () => {
+    const composer = new Composer({
+      loader: createMockLoader({
+        'view.md': '---\nlayout: layouts/view.md\ncontent:\n  title: "T"\n---\n# Body',
+        'layouts/view.md': '---\nparent: base.md\n---\n<h1>{{content.title}}</h1><!-- slot:content -->',
+        'base.md': '<main><!-- slot:body --></main>',
+      }),
+    });
+
+    const result = await composer.compose('view.md', '');
+    expect(result).toContain('<h1>T</h1>');
+    expect(result).toContain('# Body');
+  });
+});
