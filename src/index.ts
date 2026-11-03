@@ -7,6 +7,7 @@ export {
 } from "./transformers";
 export { LoadStep } from "./steps/load-step";
 export { ParseStep } from "./steps/parse-step";
+export { LayoutStep } from "./steps/layout-step";
 export { TransformStep } from "./steps/transform-step";
 export { StitchStep } from "./steps/stitch-step";
 export { RootMetaStep } from "./steps/root-meta-step";

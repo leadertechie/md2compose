@@ -3,6 +3,7 @@ import { Composer } from "./composer";
 import { defaultTransformers } from "./transformers";
 import { LoadStep } from "./steps/load-step";
 import { ParseStep } from "./steps/parse-step";
+import { LayoutStep } from "./steps/layout-step";
 import { TransformStep } from "./steps/transform-step";
 import { StitchStep } from "./steps/stitch-step";
 import { RootMetaStep } from "./steps/root-meta-step";
@@ -48,6 +49,7 @@ export class ComposerBuilder {
     const steps = [
       new LoadStep(this.loader),
       new ParseStep(),
+      new LayoutStep(this.loader),
       new TransformStep([...defaultTransformers(baseUrl), ...this.transformers]),
       new StitchStep(this.loader, this.defaultParent),
       new RootMetaStep(),

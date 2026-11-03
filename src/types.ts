@@ -4,6 +4,8 @@ export type Loader = (path: string) => Promise<string | null>;
 /** Parsed frontmatter metadata */
 export interface MDMetadata {
   parent?: string;
+  layout?: string;
+  content?: Record<string, unknown>;
   skip?: string[];
   [key: string]: any;
 }
